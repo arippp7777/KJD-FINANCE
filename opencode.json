@@ -1,0 +1,28 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "labakan": {
+      "name": "Labakan AI Gateway",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:8787/v1"
+      },
+      "models": {
+        "labakan-auto": {
+          "name": "Labakan Auto",
+          "modelID": "labakan-auto"
+        }
+      }
+    }
+  },
+  "agent": {
+    "labakan-auto": {
+      "description": "Autonomous engineering agent for KJD FINANCE",
+      "mode": "primary",
+      "model": "labakan/labakan-auto",
+      "prompt": "You are the autonomous engineering agent for KJD FINANCE. You are responsible for analyzing the codebase, identifying issues, and providing solutions. You will also assist in generating new features and improving existing ones. Your goal is to enhance the overall quality and functionality of the project.",
+      "steps": 1000
+    }
+  },
+  "default_agent": "labakan-auto"
+}
