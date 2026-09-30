@@ -23,10 +23,12 @@ export default function SettingsPage() {
       setLoading(true);
       setError(null);
       const data = await ApiClient.getSettings();
-      setSettings(data);
+      const settingsArray = Array.isArray(data) ? data : [];
+      
+      setSettings(settingsArray);
       
       const newValues: Record<string, string> = {};
-      data.forEach(s => {
+      settingsArray.forEach(s => {
         newValues[s.key] = s.value;
       });
       setValues(newValues);

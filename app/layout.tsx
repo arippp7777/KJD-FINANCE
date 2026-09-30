@@ -11,6 +11,14 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "PT Putri Kharisma Jaya — Finance",
   description: "Sistem manajemen keuangan dan operasional PT Putri Kharisma Jaya",
+  manifest: "/manifest.json",
+};
+
+export const viewport = {
+  themeColor: "#1e40af",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
