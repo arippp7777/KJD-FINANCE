@@ -3,7 +3,7 @@
 import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft, Save, Plus } from "lucide-react";
 import { ApiClient } from "@/lib/api-client";
 import { parseIDRInput, formatIDR } from "@/lib/currency";
 import type { Customer } from "@/types/customer";
@@ -153,6 +153,7 @@ export default function EditTripPage({ params }: { params: Promise<{ id: string 
               
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Tanggal Trip <span className="text-red-500">*</span></label>
+                <p className="text-[11px] text-gray-500 mb-1">Pilih tanggal keberangkatan kendaraan.</p>
                 <input 
                   type="date" 
                   required
@@ -164,6 +165,7 @@ export default function EditTripPage({ params }: { params: Promise<{ id: string 
 
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Status <span className="text-red-500">*</span></label>
+                <p className="text-[11px] text-gray-500 mb-1">Pilih "Active" jika sedang berjalan, "Completed" jika selesai.</p>
                 <select 
                   required
                   value={status}
@@ -178,6 +180,7 @@ export default function EditTripPage({ params }: { params: Promise<{ id: string 
 
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Jenis Trip <span className="text-red-500">*</span></label>
+                <p className="text-[11px] text-gray-500 mb-1">Pilih jenis layanan (Reguler, Charter, atau Kontrak).</p>
                 <select 
                   required
                   value={tripType}
@@ -192,6 +195,7 @@ export default function EditTripPage({ params }: { params: Promise<{ id: string 
 
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Customer <span className="text-red-500">*</span></label>
+                <p className="text-[11px] text-gray-500 mb-1">Pilih perusahaan penyewa (customer).</p>
                 <select 
                   required
                   value={customerId}
@@ -211,6 +215,7 @@ export default function EditTripPage({ params }: { params: Promise<{ id: string 
 
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Unit Kendaraan <span className="text-red-500">*</span></label>
+                <p className="text-[11px] text-gray-500 mb-1">Pilih armada/mobil yang akan digunakan.</p>
                 <select 
                   required
                   value={unitId}
@@ -229,9 +234,11 @@ export default function EditTripPage({ params }: { params: Promise<{ id: string 
 
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Nama Operator/Sopir <span className="text-red-500">*</span></label>
+                <p className="text-[11px] text-gray-500 mb-1">Ketik nama sopir yang bertugas membawa unit.</p>
                 <input 
                   type="text" 
                   required
+                  placeholder="Contoh: Budi Santoso"
                   value={operator}
                   onChange={(e) => setOperator(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" 
@@ -240,9 +247,11 @@ export default function EditTripPage({ params }: { params: Promise<{ id: string 
 
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Asal (Origin) <span className="text-red-500">*</span></label>
+                <p className="text-[11px] text-gray-500 mb-1">Tuliskan nama kota atau lokasi penjemputan.</p>
                 <input 
                   type="text" 
                   required
+                  placeholder="Contoh: Dumai"
                   value={origin}
                   onChange={(e) => setOrigin(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" 
@@ -251,9 +260,11 @@ export default function EditTripPage({ params }: { params: Promise<{ id: string 
 
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Tujuan (Destination) <span className="text-red-500">*</span></label>
+                <p className="text-[11px] text-gray-500 mb-1">Tuliskan nama kota atau lokasi tujuan bongkar.</p>
                 <input 
                   type="text" 
                   required
+                  placeholder="Contoh: Pekanbaru"
                   value={destination}
                   onChange={(e) => setDestination(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" 
@@ -264,6 +275,7 @@ export default function EditTripPage({ params }: { params: Promise<{ id: string 
                 <label className="text-sm font-medium text-gray-700">
                   Pendapatan (Revenue) <span className="text-red-500">*</span>
                 </label>
+                <p className="text-[11px] text-gray-500 mb-1">Total harga atau biaya jasa (hanya angka, tanpa titik/koma).</p>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <span className="text-gray-500">Rp</span>
@@ -271,20 +283,23 @@ export default function EditTripPage({ params }: { params: Promise<{ id: string 
                   <input 
                     type="text" 
                     required
+                    placeholder="Contoh: 5000000"
                     value={revenueInput}
                     onChange={handleRevenueChange}
                     className="w-full pl-12 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" 
                   />
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
-                  {revenueInput && !isNaN(parseIDRInput(revenueInput)) && `Dibaca: ${formatIDR(parseIDRInput(revenueInput))}`}
+                  {revenueInput && !isNaN(parseIDRInput(revenueInput)) && `Akan dibaca sebagai: ${formatIDR(parseIDRInput(revenueInput))}`}
                 </p>
               </div>
 
               <div className="space-y-1 md:col-span-2">
                 <label className="text-sm font-medium text-gray-700">Catatan Tambahan</label>
+                <p className="text-[11px] text-gray-500 mb-1">Informasi tambahan (opsional).</p>
                 <textarea 
                   rows={3}
+                  placeholder="Contoh: Kondisi jalan tol, barang khusus, dll."
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 resize-none" 
@@ -293,30 +308,40 @@ export default function EditTripPage({ params }: { params: Promise<{ id: string 
 
             </div>
 
-            <div className="pt-6 border-t border-gray-100 flex justify-end gap-3">
+            <div className="pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
               <Link 
-                href={`/trips/${id}`}
-                className="px-6 py-2 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                href={`/trips/${id}/expenses/new`}
+                className="flex items-center justify-center gap-2 px-6 py-2 bg-emerald-50 text-emerald-700 border border-emerald-100 rounded-lg hover:bg-emerald-100 transition-colors font-medium"
               >
-                Batal
+                <Plus size={18} />
+                Tambah Pengeluaran
               </Link>
-              <button 
-                type="submit"
-                disabled={saving}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {saving ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Menyimpan...
-                  </>
-                ) : (
-                  <>
-                    <Save size={18} />
-                    Simpan Perubahan
-                  </>
-                )}
-              </button>
+              
+              <div className="flex justify-end gap-3">
+                <Link 
+                  href={`/trips/${id}`}
+                  className="flex-1 sm:flex-none text-center px-6 py-2 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                >
+                  Batal
+                </Link>
+                <button 
+                  type="submit"
+                  disabled={saving}
+                  className="flex-1 sm:flex-none px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {saving ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Menyimpan...
+                    </>
+                  ) : (
+                    <>
+                      <Save size={18} />
+                      Simpan Perubahan
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
             
           </form>
