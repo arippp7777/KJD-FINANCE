@@ -28,7 +28,7 @@
 // ============================================================
 
 /** Replace with your actual Google Spreadsheet ID */
-var SPREADSHEET_ID = "YOUR_SPREADSHEET_ID_HERE";
+var SPREADSHEET_ID = "1H8UYPZ6F24QcRWuHveqPStZZFxulp0SJSB6gs1GLQQc";
 
 /** Timezone for date operations */
 var TIMEZONE = "Asia/Jakarta";
@@ -805,7 +805,7 @@ function createUnit(body) {
   if (err) throw new Error(err);
 
   var validStatuses = ["ACTIVE", "INACTIVE", "MAINTENANCE"];
-  var validTypes    = ["TRUCK", "PICKUP", "CONTAINER", "OTHER"];
+  var validTypes    = ["TRUCK", "PICKUP", "CONTAINER", "TOWING", "CRANE", "OTHER"];
   var status = body.status || "ACTIVE";
   var type   = body.type   || "TRUCK";
   if (validStatuses.indexOf(status) === -1) throw new Error("Invalid status: " + status);
@@ -846,7 +846,7 @@ function updateUnit(body) {
     if (validStatuses.indexOf(body.status) === -1) throw new Error("Invalid status: " + body.status);
   }
   if (body.type) {
-    var validTypes = ["TRUCK", "PICKUP", "CONTAINER", "OTHER"];
+    var validTypes = ["TRUCK", "PICKUP", "CONTAINER", "TOWING", "CRANE", "OTHER"];
     if (validTypes.indexOf(body.type) === -1) throw new Error("Invalid type: " + body.type);
   }
 

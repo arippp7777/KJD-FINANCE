@@ -49,7 +49,7 @@ export default function UnitsPage() {
     setFormId("");
     setFormCode("");
     setFormName("");
-    setFormType("");
+    setFormType("TRUCK");
     setFormPlate("");
     setFormStatus("ACTIVE");
     setIsModalOpen(true);
@@ -284,12 +284,17 @@ export default function UnitsPage() {
 
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Tipe Kendaraan</label>
-                <input 
-                  type="text"
+                <select
                   value={formType} onChange={e => setFormType(e.target.value)}
-                  placeholder="Mis. Truk Fuso, Engkel"
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                />
+                >
+                  <option value="TRUCK">Truk</option>
+                  <option value="PICKUP">Pickup</option>
+                  <option value="CONTAINER">Container</option>
+                  <option value="TOWING">Towing</option>
+                  <option value="CRANE">Crane</option>
+                  <option value="OTHER">Lainnya</option>
+                </select>
               </div>
 
               <div className="space-y-1">
