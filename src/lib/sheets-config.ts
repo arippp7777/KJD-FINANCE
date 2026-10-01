@@ -1,6 +1,6 @@
 /**
  * Google Sheets Database Configuration
- * Phase 4 – KJD Finance (PT Putri Kharisma Jaya)
+ * Phase 4 – KJD Finance (AJM Towing)
  *
  * SPREADSHEET_ID: Set via environment variable GOOGLE_SHEETS_SPREADSHEET_ID.
  * On Phase 5, this will be wired to a real Google Sheets via Service Account.

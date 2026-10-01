@@ -60,7 +60,7 @@ export function Sidebar() {
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <Building2 size={16} className="text-white" />
           </div>
-          <span className="font-bold text-gray-900 text-sm">PT Putri Kharisma </span>
+          <span className="font-bold text-gray-900 text-sm">AJM Towing </span>
         </div>
         <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -114,7 +114,7 @@ function SidebarInnerContent({
         </div>
         {!collapsed && (
           <div className="overflow-hidden">
-            <p className="font-bold text-gray-900 text-sm leading-tight whitespace-nowrap">PT Putri Kharisma</p>
+            <p className="font-bold text-gray-900 text-sm leading-tight whitespace-nowrap">AJM Towing</p>
             <p className="text-xs text-gray-400 whitespace-nowrap">Finance System</p>
           </div>
         )}

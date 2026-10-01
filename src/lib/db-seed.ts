@@ -1,6 +1,6 @@
 /**
  * Database Seed Data — Phase 4
- * PT Putri Kharisma Jaya Finance
+ * AJM Towing Finance
  *
  * This module provides the canonical initial data for the Google Sheets
  * database. Call `seedDatabase()` once when setting up a fresh spreadsheet.
@@ -43,7 +43,7 @@ const EXPENSE_CATEGORIES_SEED: Omit<ExpenseCategory, "id" | "created_at" | "upda
 const SETTINGS_SEED: { key: SettingKey; value: string; description: string }[] = [
   {
     key: "company_name",
-    value: "PT Putri Kharisma Jaya",
+    value: "AJM Towing",
     description: "Nama perusahaan",
   },
   {

@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "PT Putri Kharisma Jaya — Finance",
-  description: "Sistem manajemen keuangan dan operasional PT Putri Kharisma Jaya",
+  title: "AJM Towing — Finance",
+  description: "Sistem manajemen keuangan dan operasional AJM Towing",
   manifest: "/manifest.json",
 };
 
