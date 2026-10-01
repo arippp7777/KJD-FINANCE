@@ -13,7 +13,6 @@ export default function CustomersPage() {
 
   // Filters
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState<string>("ALL");
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -112,13 +111,12 @@ export default function CustomersPage() {
 
   const filteredCustomers = useMemo(() => {
     return customers.filter(c => {
-      const matchSearch = 
-        c.name.toLowerCase().includes(search.toLowerCase()) || 
-        c.contact_person.toLowerCase().includes(search.toLowerCase());
-      const matchStatus = statusFilter === "ALL" || c.status === statusFilter;
-      return matchSearch && matchStatus;
+      return (
+        c.name.toLowerCase().includes(search.toLowerCase()) ||
+        c.contact_person.toLowerCase().includes(search.toLowerCase())
+      );
     });
-  }, [customers, search, statusFilter]);
+  }, [customers, search]);
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-8">
@@ -154,15 +152,6 @@ export default function CustomersPage() {
               className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-sm"
             />
           </div>
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-sm sm:w-48"
-          >
-            <option value="ALL">Semua Status</option>
-            <option value="ACTIVE">Active</option>
-            <option value="INACTIVE">Inactive</option>
-          </select>
         </div>
 
         {error && (
@@ -181,21 +170,20 @@ export default function CustomersPage() {
                 <tr>
                   <th className="px-4 sm:px-6 py-4 font-medium whitespace-nowrap">Customer Name</th>
                   <th className="px-4 sm:px-6 py-4 font-medium whitespace-nowrap">Contact Person</th>
-                  <th className="px-4 sm:px-6 py-4 font-medium whitespace-nowrap">Phone & Address</th>
-                  <th className="px-4 sm:px-6 py-4 font-medium whitespace-nowrap">Status</th>
+                  <th className="px-4 sm:px-6 py-4 font-medium whitespace-nowrap">Phone &amp; Address</th>
                   <th className="px-4 sm:px-6 py-4 font-medium text-right whitespace-nowrap">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {loading ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center">
+                    <td colSpan={4} className="px-6 py-12 text-center">
                       <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
                     </td>
                   </tr>
                 ) : filteredCustomers.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center text-gray-500">Tidak ada data customer yang sesuai.</td>
+                    <td colSpan={4} className="px-6 py-12 text-center text-gray-500">Tidak ada data customer yang sesuai.</td>
                   </tr>
                 ) : (
                   filteredCustomers.map(c => (
@@ -205,13 +193,6 @@ export default function CustomersPage() {
                       <td className="px-4 sm:px-6 py-4 min-w-[150px] whitespace-normal">
                         <div className="text-gray-900 whitespace-nowrap">{c.phone || "-"}</div>
                         <div className="text-xs text-gray-500 mt-1 line-clamp-2" title={c.address}>{c.address || "-"}</div>
-                      </td>
-                      <td className="px-4 sm:px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                          c.status === "ACTIVE" ? "bg-emerald-50 text-emerald-700" : "bg-gray-100 text-gray-700"
-                        }`}>
-                          {c.status}
-                        </span>
                       </td>
                       <td className="px-4 sm:px-6 py-4 text-right whitespace-nowrap">
                         <div className="flex items-center justify-end gap-3">
