@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Users, Plus, Search, Edit, Trash2, X, AlertCircle } from "lucide-react";
 import { ApiClient } from "@/lib/api-client";
+import { SavingOverlay, SavingButton } from "@/components/saving-overlay";
 import type { Customer, CustomerStatus } from "@/types/customer";
 
 export default function CustomersPage() {
@@ -253,7 +254,8 @@ export default function CustomersPage() {
               </button>
             </div>
             
-            <form onSubmit={handleSave} className="p-6 space-y-4">
+            <form onSubmit={handleSave} className="p-6 space-y-4 relative">
+              {saving && <SavingOverlay />}
               
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Nama Customer <span className="text-red-500">*</span></label>
@@ -304,9 +306,7 @@ export default function CustomersPage() {
 
               <div className="pt-4 border-t border-gray-100 flex justify-end gap-3">
                 <button type="button" onClick={closeModal} className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 font-medium">Batal</button>
-                <button type="submit" disabled={saving} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50">
-                  {saving ? "Menyimpan..." : "Simpan"}
-                </button>
+                <SavingButton saving={saving} />
               </div>
             </form>
           </div>

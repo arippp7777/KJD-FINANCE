@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Truck, Plus, Search, Edit, Trash2, X, AlertCircle } from "lucide-react";
 import { ApiClient } from "@/lib/api-client";
+import { SavingOverlay, SavingButton } from "@/components/saving-overlay";
 import type { Unit, UnitStatus } from "@/types/unit";
 
 export default function UnitsPage() {
@@ -74,12 +75,14 @@ export default function UnitsPage() {
     e.preventDefault();
     try {
       setSaving(true);
+      // Auto-generate code from plate number (strip spaces, uppercase)
+      const autoCode = formPlate.replace(/\s+/g, "").toUpperCase();
       const payload = {
-        code: formCode,
+        code: autoCode,
         name: formName,
         type: formType as import("@/types/unit").UnitType,
         plate_number: formPlate,
-        status: formStatus
+        status: "ACTIVE" as import("@/types/unit").UnitStatus,
       };
       
       if (modalMode === "CREATE") {
@@ -252,31 +255,26 @@ export default function UnitsPage() {
               </button>
             </div>
             
-            <form onSubmit={handleSave} className="p-6 space-y-4">
+            <form onSubmit={handleSave} className="p-6 space-y-4 relative">
+              {saving && <SavingOverlay />}
               
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-sm font-medium text-gray-700">Kode Unit <span className="text-red-500">*</span></label>
-                  <input 
-                    type="text" required
-                    value={formCode} onChange={e => setFormCode(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-sm font-medium text-gray-700">Plat Nomor <span className="text-red-500">*</span></label>
-                  <input 
-                    type="text" required
-                    value={formPlate} onChange={e => setFormPlate(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                  />
-                </div>
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">Plat Nomor <span className="text-red-500">*</span></label>
+                <p className="text-[11px] text-gray-500 mb-1">Nomor polisi kendaraan. Contoh: BM 1234 AM</p>
+                <input 
+                  type="text" required
+                  placeholder="Contoh: BM 1234 AM"
+                  value={formPlate} onChange={e => setFormPlate(e.target.value)}
+                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                />
               </div>
 
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Nama Armada <span className="text-red-500">*</span></label>
+                <p className="text-[11px] text-gray-500 mb-1">Nama atau merek kendaraan. Contoh: Truk Fuso Engkel</p>
                 <input 
                   type="text" required
+                  placeholder="Contoh: Truk Fuso Engkel"
                   value={formName} onChange={e => setFormName(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 />
@@ -297,24 +295,9 @@ export default function UnitsPage() {
                 </select>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Status <span className="text-red-500">*</span></label>
-                <select 
-                  required
-                  value={formStatus} onChange={e => setFormStatus(e.target.value as UnitStatus)}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                >
-                  <option value="ACTIVE">Active</option>
-                  <option value="MAINTENANCE">Maintenance</option>
-                  <option value="INACTIVE">Inactive</option>
-                </select>
-              </div>
-
               <div className="pt-4 border-t border-gray-100 flex justify-end gap-3">
                 <button type="button" onClick={closeModal} className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 font-medium">Batal</button>
-                <button type="submit" disabled={saving} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50">
-                  {saving ? "Menyimpan..." : "Simpan"}
-                </button>
+                <SavingButton saving={saving} />
               </div>
             </form>
           </div>

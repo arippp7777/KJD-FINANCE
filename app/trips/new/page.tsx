@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save } from "lucide-react";
 import { ApiClient } from "@/lib/api-client";
+import { SavingOverlay, SavingButton } from "@/components/saving-overlay";
 import { parseIDRInput, formatIDR, formatNumberInput } from "@/lib/currency";
 import { todayISODate } from "@/lib/utils";
 import type { Customer } from "@/types/customer";
@@ -133,8 +134,9 @@ export default function NewTripPage() {
         )}
 
         {/* Form */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden relative">
           <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-6">
+            {saving && <SavingOverlay />}
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
@@ -279,23 +281,7 @@ export default function NewTripPage() {
               >
                 Batal
               </Link>
-              <button 
-                type="submit"
-                disabled={saving}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {saving ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Menyimpan...
-                  </>
-                ) : (
-                  <>
-                    <Save size={18} />
-                    Simpan Trip
-                  </>
-                )}
-              </button>
+              <SavingButton saving={saving} label="Simpan Trip" />
             </div>
             
           </form>

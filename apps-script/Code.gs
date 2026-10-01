@@ -801,28 +801,29 @@ function getUnits(params) {
  * POST createUnit
  */
 function createUnit(body) {
-  var err = validateRequired(body, ["code", "name", "plate_number"]);
+  var err = validateRequired(body, ["name", "plate_number"]);
   if (err) throw new Error(err);
 
-  var validStatuses = ["ACTIVE", "INACTIVE", "MAINTENANCE"];
-  var validTypes    = ["TRUCK", "PICKUP", "CONTAINER", "TOWING", "CRANE", "OTHER"];
-  var status = body.status || "ACTIVE";
-  var type   = body.type   || "TRUCK";
-  if (validStatuses.indexOf(status) === -1) throw new Error("Invalid status: " + status);
-  if (validTypes.indexOf(type) === -1)      throw new Error("Invalid type: " + type);
+  var validTypes = ["TRUCK", "PICKUP", "CONTAINER", "TOWING", "CRANE", "OTHER"];
+  var type = body.type || "TRUCK";
+  if (validTypes.indexOf(type) === -1) throw new Error("Invalid type: " + type);
 
-  // Check code uniqueness
-  var existing = findOne(SHEETS.UNITS, "code", body.code.toUpperCase());
-  if (existing) throw new Error("Unit code already exists: " + body.code);
+  // Auto-generate code from plate number if not provided
+  var plateStr = String(body.plate_number).replace(/\s+/g, "").toUpperCase();
+  var code = body.code ? String(body.code).replace(/\s+/g, "").toUpperCase() : plateStr;
+
+  // Check code uniqueness — if duplicate, append a suffix
+  var existing = findOne(SHEETS.UNITS, "code", code);
+  if (existing) code = code + "_" + Date.now().toString().slice(-4);
 
   var now  = nowISO();
   var unit = {
     id:           generateId(),
-    code:         body.code.toUpperCase(),
+    code:         code,
     name:         body.name,
     type:         type,
-    plate_number: body.plate_number.toUpperCase(),
-    status:       status,
+    plate_number: plateStr,
+    status:       "ACTIVE",
     created_at:   now,
     updated_at:   now
   };
