@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { Users, Plus, Search, Edit, Trash2, X, AlertCircle } from "lucide-react";
 import { ApiClient } from "@/lib/api-client";
 import { SavingOverlay, SavingButton } from "@/components/saving-overlay";
-import type { Customer, CustomerStatus } from "@/types/customer";
+import type { Customer } from "@/types/customer";
 
 export default function CustomersPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -26,7 +26,6 @@ export default function CustomersPage() {
   const [formPhone, setFormPhone] = useState("");
   const [formAddress, setFormAddress] = useState("");
   const [formContactPerson, setFormContactPerson] = useState("");
-  const [formStatus, setFormStatus] = useState<CustomerStatus>("ACTIVE");
 
   useEffect(() => {
     fetchCustomers();
@@ -52,7 +51,6 @@ export default function CustomersPage() {
     setFormPhone("");
     setFormAddress("");
     setFormContactPerson("");
-    setFormStatus("ACTIVE");
     setIsModalOpen(true);
   };
 
@@ -63,7 +61,6 @@ export default function CustomersPage() {
     setFormPhone(customer.phone);
     setFormAddress(customer.address);
     setFormContactPerson(customer.contact_person);
-    setFormStatus(customer.status);
     setIsModalOpen(true);
   };
 
@@ -75,13 +72,14 @@ export default function CustomersPage() {
     e.preventDefault();
     try {
       setSaving(true);
+      const status = "ACTIVE" as import("@/types/customer").CustomerStatus;
       if (modalMode === "CREATE") {
         await ApiClient.createCustomer({
           name: formName,
           phone: formPhone,
           address: formAddress,
           contact_person: formContactPerson,
-          status: "ACTIVE"
+          status
         });
       } else {
         await ApiClient.updateCustomer({
@@ -90,7 +88,7 @@ export default function CustomersPage() {
           phone: formPhone,
           address: formAddress,
           contact_person: formContactPerson,
-          status: "ACTIVE"
+          status
         });
       }
       closeModal();

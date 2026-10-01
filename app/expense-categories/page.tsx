@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 import { Tags, Plus, Search, Edit, Trash2, X, AlertCircle } from "lucide-react";
 import { ApiClient } from "@/lib/api-client";
 import { SavingOverlay, SavingButton } from "@/components/saving-overlay";
-import type { ExpenseCategory, CategoryStatus } from "@/types/expense";
+import type { ExpenseCategory } from "@/types/expense";
 
 export default function ExpenseCategoriesPage() {
   const [categories, setCategories] = useState<ExpenseCategory[]>([]);
@@ -24,7 +24,6 @@ export default function ExpenseCategoriesPage() {
   const [formId, setFormId] = useState("");
   const [formName, setFormName] = useState("");
   const [formDescription, setFormDescription] = useState("");
-  const [formStatus, setFormStatus] = useState<CategoryStatus>("ACTIVE");
 
   useEffect(() => {
     fetchCategories();
@@ -48,7 +47,6 @@ export default function ExpenseCategoriesPage() {
     setFormId("");
     setFormName("");
     setFormDescription("");
-    setFormStatus("ACTIVE");
     setIsModalOpen(true);
   };
 
@@ -57,7 +55,6 @@ export default function ExpenseCategoriesPage() {
     setFormId(cat.id);
     setFormName(cat.name);
     setFormDescription(cat.description || "");
-    setFormStatus(cat.status);
     setIsModalOpen(true);
   };
 
@@ -72,7 +69,7 @@ export default function ExpenseCategoriesPage() {
       const payload = {
         name: formName,
         description: formDescription,
-        status: "ACTIVE"
+        status: "ACTIVE" as import("@/types/expense").CategoryStatus
       };
       
       if (modalMode === "CREATE") {
