@@ -172,14 +172,18 @@ export default function TripsPage() {
                       </td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex items-center justify-end gap-3">
-                          <Link href={`/trips/${trip.id}`} className="text-gray-400 hover:text-blue-600 transition-colors">
+                          <Link href={`/trips/${trip.id}/expenses/new`} title="Tambah Pengeluaran" className="text-gray-400 hover:text-emerald-600 transition-colors">
+                            <Plus size={18} />
+                          </Link>
+                          <Link href={`/trips/${trip.id}`} title="Lihat Detail" className="text-gray-400 hover:text-blue-600 transition-colors">
                             <Eye size={18} />
                           </Link>
-                          <Link href={`/trips/${trip.id}/edit`} className="text-gray-400 hover:text-amber-600 transition-colors">
+                          <Link href={`/trips/${trip.id}/edit`} title="Edit Trip" className="text-gray-400 hover:text-amber-600 transition-colors">
                             <Edit size={18} />
                           </Link>
                           <button
                             onClick={() => handleDelete(trip.id)}
+                            title="Hapus Trip"
                             className="text-gray-400 hover:text-red-600 transition-colors"
                           >
                             <Trash2 size={18} />
