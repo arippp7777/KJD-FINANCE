@@ -81,7 +81,7 @@ export default function CustomersPage() {
           phone: formPhone,
           address: formAddress,
           contact_person: formContactPerson,
-          status: formStatus
+          status: "ACTIVE"
         });
       } else {
         await ApiClient.updateCustomer({
@@ -90,7 +90,7 @@ export default function CustomersPage() {
           phone: formPhone,
           address: formAddress,
           contact_person: formContactPerson,
-          status: formStatus
+          status: "ACTIVE"
         });
       }
       closeModal();
@@ -267,9 +267,9 @@ export default function CustomersPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Contact Person <span className="text-red-500">*</span></label>
+                <label className="text-sm font-medium text-gray-700">Contact Person</label>
                 <input 
-                  type="text" required
+                  type="text"
                   value={formContactPerson} onChange={e => setFormContactPerson(e.target.value)}
                   className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 />
@@ -292,17 +292,7 @@ export default function CustomersPage() {
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Status <span className="text-red-500">*</span></label>
-                <select 
-                  required
-                  value={formStatus} onChange={e => setFormStatus(e.target.value as CustomerStatus)}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                >
-                  <option value="ACTIVE">Active</option>
-                  <option value="INACTIVE">Inactive</option>
-                </select>
-              </div>
+
 
               <div className="pt-4 border-t border-gray-100 flex justify-end gap-3">
                 <button type="button" onClick={closeModal} className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 font-medium">Batal</button>

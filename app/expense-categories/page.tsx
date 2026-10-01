@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { Tags, Plus, Search, Edit, Trash2, X, AlertCircle } from "lucide-react";
 import { ApiClient } from "@/lib/api-client";
+import { SavingOverlay, SavingButton } from "@/components/saving-overlay";
 import type { ExpenseCategory, CategoryStatus } from "@/types/expense";
 
 export default function ExpenseCategoriesPage() {
@@ -71,7 +72,7 @@ export default function ExpenseCategoriesPage() {
       const payload = {
         name: formName,
         description: formDescription,
-        status: formStatus
+        status: "ACTIVE"
       };
       
       if (modalMode === "CREATE") {
@@ -235,7 +236,8 @@ export default function ExpenseCategoriesPage() {
               </button>
             </div>
             
-            <form onSubmit={handleSave} className="p-6 space-y-4">
+            <form onSubmit={handleSave} className="p-6 space-y-4 relative">
+              {saving && <SavingOverlay />}
               
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Nama Kategori <span className="text-red-500">*</span></label>
@@ -254,23 +256,9 @@ export default function ExpenseCategoriesPage() {
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Status <span className="text-red-500">*</span></label>
-                <select 
-                  required
-                  value={formStatus} onChange={e => setFormStatus(e.target.value as CategoryStatus)}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-                >
-                  <option value="ACTIVE">Active</option>
-                  <option value="INACTIVE">Inactive</option>
-                </select>
-              </div>
-
               <div className="pt-4 border-t border-gray-100 flex justify-end gap-3">
                 <button type="button" onClick={closeModal} className="px-4 py-2 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 font-medium">Batal</button>
-                <button type="submit" disabled={saving} className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50">
-                  {saving ? "Menyimpan..." : "Simpan"}
-                </button>
+                <SavingButton saving={saving} />
               </div>
             </form>
           </div>
