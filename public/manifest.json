@@ -1,6 +1,6 @@
 {
-  "name": "KJD Finance",
-  "short_name": "KJD Finance",
+  "name": "AJM Towing Finance",
+  "short_name": "AJM Towing",
   "description": "Sistem Informasi AJM Towing Finance",
   "start_url": "/",
   "display": "standalone",
@@ -8,20 +8,15 @@
   "theme_color": "#1e40af",
   "icons": [
     {
-      "src": "/globe.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/logo-ajm.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
       "purpose": "any maskable"
     },
     {
-      "src": "/globe.svg",
-      "sizes": "192x192",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "/globe.svg",
+      "src": "/logo-ajm.jpeg",
       "sizes": "512x512",
-      "type": "image/svg+xml"
+      "type": "image/jpeg"
     }
   ]
 }

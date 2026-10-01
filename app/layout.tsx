@@ -12,6 +12,10 @@ export const metadata: Metadata = {
   title: "AJM Towing — Finance",
   description: "Sistem manajemen keuangan dan operasional AJM Towing",
   manifest: "/manifest.json",
+  icons: {
+    icon: "/logo-ajm.jpeg",
+    apple: "/logo-ajm.jpeg",
+  }
 };
 
 export const viewport = {
