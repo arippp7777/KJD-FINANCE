@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -57,10 +58,14 @@ export function Sidebar() {
       {/* Mobile Top Bar */}
       <div className="md:hidden flex items-center justify-between px-4 pb-3 pt-[calc(0.75rem+env(safe-area-inset-top))] bg-white border-b border-gray-100 shadow-sm fixed top-0 left-0 right-0 z-40">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <Building2 size={16} className="text-white" />
-          </div>
-          <span className="font-bold text-gray-900 text-sm">AJM Towing </span>
+          <Image 
+            src="/logo-ajm.jpeg" 
+            alt="AJM Towing Logo" 
+            width={32} 
+            height={32} 
+            className="rounded object-cover" 
+          />
+          <span className="font-bold text-gray-900 text-sm">AJM Towing</span>
         </div>
         <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg">
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
@@ -109,8 +114,14 @@ function SidebarInnerContent({
     <div className="flex flex-col h-full">
       {/* Logo / Brand */}
       <div className={`flex items-center gap-3 px-4 py-5 border-b border-gray-100 ${collapsed ? "justify-center" : ""}`}>
-        <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-          <Building2 size={20} className="text-white" />
+        <div className="flex items-center justify-center flex-shrink-0">
+          <Image 
+            src="/logo-ajm.jpeg" 
+            alt="AJM Towing Logo" 
+            width={36} 
+            height={36} 
+            className="rounded-md object-cover" 
+          />
         </div>
         {!collapsed && (
           <div className="overflow-hidden">
