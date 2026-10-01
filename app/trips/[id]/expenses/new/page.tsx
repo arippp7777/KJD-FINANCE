@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save } from "lucide-react";
 import { ApiClient } from "@/lib/api-client";
-import { parseIDRInput, formatIDR } from "@/lib/currency";
+import { parseIDRInput, formatIDR, formatNumberInput } from "@/lib/currency";
 import { todayISODate } from "@/lib/utils";
 import type { ExpenseCategory } from "@/types/expense";
 
@@ -48,7 +48,7 @@ export default function NewExpensePage({ params }: { params: Promise<{ id: strin
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmountInput(e.target.value);
+    setAmountInput(formatNumberInput(e.target.value));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -157,16 +157,15 @@ export default function NewExpensePage({ params }: { params: Promise<{ id: strin
                   </div>
                   <input 
                     type="text" 
+                    inputMode="numeric"
                     required
-                    placeholder="0"
+                    placeholder="Contoh: 150.000"
                     value={amountInput}
                     onChange={handleAmountChange}
                     className="w-full pl-12 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" 
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  {amountInput && !isNaN(parseIDRInput(amountInput)) && `Dibaca: ${formatIDR(parseIDRInput(amountInput))}`}
-                </p>
+                <p className="text-xs text-gray-500 mt-1">Ketik angka saja, titik ribuan otomatis ditambahkan.</p>
               </div>
 
               <div className="space-y-1">

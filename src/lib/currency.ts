@@ -46,6 +46,23 @@ export function parseIDRInput(value: string): number {
   return isNaN(num) ? 0 : num;
 }
 
+/**
+ * Format a user-typed number string with dots as thousands separator in real-time.
+ * Called on every keystroke so the input visually shows "10.000" as user types "10000".
+ * e.g. "10000" → "10.000"  |  "1500000" → "1.500.000"
+ * Returns the formatted string to put back into the input value.
+ */
+export function formatNumberInput(value: string): string {
+  // Strip anything that isn't a digit
+  const digits = value.replace(/\D/g, "");
+  if (!digits) return "";
+  // Re-format with dots as thousands separator
+  return new Intl.NumberFormat("id-ID", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(parseInt(digits, 10));
+}
+
 /** Sum an array of numbers (safe for empty arrays → 0) */
 export function sumAmounts(amounts: number[]): number {
   return amounts.reduce((acc, n) => acc + n, 0);

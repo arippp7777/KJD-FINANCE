@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save } from "lucide-react";
 import { ApiClient } from "@/lib/api-client";
-import { parseIDRInput, formatIDR } from "@/lib/currency";
+import { parseIDRInput, formatIDR, formatNumberInput } from "@/lib/currency";
 import { todayISODate } from "@/lib/utils";
 import type { Customer } from "@/types/customer";
 import type { Unit } from "@/types/unit";
@@ -60,10 +60,7 @@ export default function NewTripPage() {
   };
 
   const handleRevenueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Basic formatting as user types: allow only numbers and formatted strings
-    // But for a robust input, we usually parse on blur or keep raw input and parse.
-    // For simplicity, we just keep raw string and format on display or parse on submit.
-    setRevenueInput(e.target.value);
+    setRevenueInput(formatNumberInput(e.target.value));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -243,23 +240,22 @@ export default function NewTripPage() {
                 <label className="text-sm font-medium text-gray-700">
                   Pendapatan (Revenue) <span className="text-red-500">*</span>
                 </label>
-                <p className="text-[11px] text-gray-500 mb-1">Total harga atau biaya jasa (hanya angka, tanpa titik/koma).</p>
+                <p className="text-[11px] text-gray-500 mb-1">Ketik angka saja, titik ribuan otomatis ditambahkan.</p>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <span className="text-gray-500">Rp</span>
                   </div>
                   <input 
                     type="text" 
+                    inputMode="numeric"
                     required
-                    placeholder="Contoh: 5000000"
+                    placeholder="Contoh: 5.000.000"
                     value={revenueInput}
                     onChange={handleRevenueChange}
                     className="w-full pl-12 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500" 
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  Format akan otomatis dikonversi saat disimpan. {revenueInput && !isNaN(parseIDRInput(revenueInput)) && `(Akan dibaca sebagai: ${formatIDR(parseIDRInput(revenueInput))})`}
-                </p>
+                <p className="text-xs text-gray-500 mt-1">Total pendapatan: <strong>{revenueInput ? formatIDR(parseIDRInput(revenueInput)) : "Rp 0"}</strong></p>
               </div>
 
               <div className="space-y-1 md:col-span-2">
