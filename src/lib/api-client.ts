@@ -23,6 +23,11 @@ export class ApiClient {
       // GET: append all params as query string — no custom headers → no CORS preflight
       const params = new URLSearchParams();
       params.append("action", action);
+      
+      // Cache-buster: Prevents browser from caching the 302 redirect to script.googleusercontent.com
+      // The redirect URL contains a token that expires, so caching it causes random HTTP 404 errors.
+      params.append("_t", Date.now().toString());
+
       if (payload) {
         Object.entries(payload).forEach(([key, value]) => {
           if (value !== undefined && value !== null) {
@@ -34,6 +39,7 @@ export class ApiClient {
       options = {
         method: "GET",
         redirect: "follow",
+        cache: "no-store", // Bypass browser/Next.js cache
       };
     } else {
       // POST: send as URL-encoded form data (no Content-Type: application/json)
@@ -51,6 +57,7 @@ export class ApiClient {
       options = {
         method: "POST",
         redirect: "follow",
+        cache: "no-store", // Bypass browser/Next.js cache
         body: params.toString(),
         // application/x-www-form-urlencoded is a safe "simple" content type
         headers: {
