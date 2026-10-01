@@ -188,9 +188,13 @@ export default function TripDetailPage({ params }: { params: Promise<{ id: strin
                             {formatIDR(expense.amount)}
                           </td>
                           <td className="px-4 sm:px-6 py-4 text-right whitespace-nowrap">
-                            <div className="flex items-center justify-end gap-3">
-                              <Link href={`/trips/${trip.id}/expenses/${expense.id}/edit`} className="text-gray-400 hover:text-amber-600 transition-colors">
-                                <Edit size={16} />
+                            <div className="flex items-center justify-end gap-2">
+                              <Link 
+                                href={`/trips/${trip.id}/expenses/${expense.id}/edit`} 
+                                className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-amber-50 text-amber-700 hover:bg-amber-100 rounded-lg font-medium text-xs transition-colors shadow-sm"
+                              >
+                                <Edit size={14} />
+                                Edit
                               </Link>
                               <button 
                                 onClick={async () => {
@@ -202,9 +206,10 @@ export default function TripDetailPage({ params }: { params: Promise<{ id: strin
                                     alert("Failed to delete: " + err.message);
                                   }
                                 }}
-                                className="text-gray-400 hover:text-red-600 transition-colors"
+                                className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-red-50 text-red-700 hover:bg-red-100 rounded-lg font-medium text-xs transition-colors shadow-sm"
                               >
-                                <Trash2 size={16} />
+                                <Trash2 size={14} />
+                                Hapus
                               </button>
                             </div>
                           </td>
